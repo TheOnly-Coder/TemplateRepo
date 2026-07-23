@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lua API Demo - RepoWeb</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; padding: 2rem; }
+    h1 { color: #a3e635; font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid #30363d; padding-bottom: 0.5rem; }
+    .api-section { margin-bottom: 2rem; }
+    .api-section h2 { color: #58a6ff; font-size: 1rem; margin-bottom: 0.5rem; }
+    pre { background: #161b22; border: 1px solid #30363d; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; font-size: 0.85rem; line-height: 1.5; }
+    .output { margin-top: 1rem; padding: 1rem; background: #0d1117; border: 1px solid #238636; border-radius: 0.5rem; }
+    .output h3 { color: #238636; margin-bottom: 0.5rem; font-size: 0.9rem; }
+    button { background: #238636; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.25rem; cursor: pointer; font-family: inherit; margin-top: 0.5rem; }
+    button:hover { background: #2ea043; }
+  </style>
+</head>
+<body>
+  <h1>&#9889; RepoWeb Lua API Demo</h1>
+  <p>This page demonstrates all available Lua APIs in RepoWeb.</p>
+
+  <div class="api-section">
+    <h2>1. DOM Access</h2>
+    <pre>-- Get element and modify it
+local el = __repoweb_dom.getElementById("target")
+el.setHTML("Hello from Lua!")
+el.setAttr("class", "highlight")</pre>
+    <button id="btn-dom">Run DOM Demo</button>
+  </div>
+
+  <div class="api-section">
+    <h2>2. Lua Computation</h2>
+    <pre>-- Pure Lua (runs in Fengari VM)
+function factorial(n)
+  if n <= 1 then return 1 end
+  return n * factorial(n - 1)
+end</pre>
+    <button id="btn-math">Run Math Demo</button>
+  </div>
+
+  <div class="output" id="output"><h3>Output</h3><div id="output-text">Click a button to run a demo...</div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
+  <script>
+    function runLua(code) {
+      if (typeof fengari === 'undefined') {
+        document.getElementById('output-text').textContent = 'Fengari not loaded!';
+        return;
+      }
+      try {
+        fengari.lua.luaL_dostring(fengari.lauxlib.L, fengari.to_luastring(code));
+      } catch(e) {
+        document.getElementById('output-text').textContent = 'Error: ' + e;
+      }
+    }
+
+    // Setup DOM proxy
+    window.__repoweb_dom = {
+      getElementById: (id) => document.getElementById(id),
+      querySelector: (sel) => document.querySelector(sel),
+      log: (msg) => console.log('[Lua]', msg),
+    };
+
+    document.getElementById('btn-dom').addEventListener('click', () => {
+      runLua([
+        'local el = __repoweb_dom.getElementById("output-text")',
+        'if el then',
+        '  el.setHTML = function(html) { this.innerHTML = html; }',
+        '  el.setHTML("DOM access works! Modified from Lua at " .. os.date())',
+        '  el.style = "color: #a3e635;"',
+        'end',
+      ].join('\n'));
+    });
+
+    document.getElementById('btn-math').addEventListener('click', () => {
+      runLua([
+        'local function factorial(n)',
+        '  if n <= 1 then return 1 end',
+        '  return n * factorial(n - 1)',
+        'end',
+        'local results = "Factorials:\\n"',
+        'for i = 1, 10 do',
+        '  results = results .. i .. "! = " .. factorial(i) .. "\\n"',
+        'end',
+        'local el = __repoweb_dom.getElementById("output-text")',
+        'el.innerHTML = "<pre>" .. results .. "</pre>"',
+        'el.style = "color: #22d3ee;"',
+      ].join('\n'));
+    });
+  </script>
+</body>
+</html>
