@@ -1,0 +1,7 @@
+{
+  "users": [
+    { "name": "Alice Chen", "role": "Admin", "joined": "2025-01-15" },
+    { "name": "Bob Martinez", "role": "Editor", "joined": "2025-03-22" },
+    { "name": "Charlie Kim", "role": "Contributor", "joined": "2025-06-10" }
+  ]
+}

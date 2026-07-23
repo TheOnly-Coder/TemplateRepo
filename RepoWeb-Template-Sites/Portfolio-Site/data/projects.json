@@ -1,0 +1,5 @@
+[
+  { "name": "RepoWeb", "desc": "A decentralized browser where websites are GitHub repositories" },
+  { "name": "LuaBridge", "desc": "Fengari-based Lua runtime for client-side web scripting" },
+  { "name": "CryptoFrag", "desc": "Fragmented AES-GCM encryption for decentralized data storage" }
+]

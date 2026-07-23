@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My First RepoWeb Site</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 id="app-title">Welcome to RepoWeb</h1>
+      <p class="subtitle">A decentralized website powered by GitHub</p>
+    </header>
+
+    <main>
+      <section class="card" id="intro-card">
+        <h2>How This Works</h2>
+        <p>
+          This website is not hosted on a traditional server. It lives inside a
+          <strong>GitHub repository</strong> as plain files. The RepoWeb browser fetches,
+          renders, and lets you interact with it — all without a web hosting provider.
+        </p>
+        <div class="badge-row">
+          <span class="badge">HTML</span>
+          <span class="badge css">CSS</span>
+          <span class="badge js">JavaScript</span>
+          <span class="badge lua">Lua</span>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Data from JSON Files</h2>
+        <p>The content below is loaded from <code>data/users.json</code> in this repo:</p>
+        <div id="users-list" class="data-display">
+          <p class="placeholder">Loading users...</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Posts Feed</h2>
+        <p>Posts are loaded from <code>data/posts.json</code>:</p>
+        <div id="posts-list" class="data-display">
+          <p class="placeholder">Loading posts...</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>User Input (TXT Data)</h2>
+        <p>
+          This section can receive TXT data injected by RepoWeb's Tier 2 handler.
+          Use <code>data-txt-src="data/user_input.txt"</code> to target this element.
+        </p>
+        <div data-txt-src="data/user_input.txt" class="txt-injection-target">
+          <p class="placeholder">No TXT data injected yet</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Dynamic Content</h2>
+        <p>JavaScript on this page can push edits to the JSON files via RepoWeb's Tier 1 API:</p>
+        <div class="action-row">
+          <button id="add-user-btn" class="btn primary">Add Random User</button>
+          <button id="add-post-btn" class="btn secondary">Create New Post</button>
+        </div>
+        <div id="action-status" class="status-msg"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with RepoWeb &mdash; Decentralized browsing on GitHub</p>
+      <p class="tiny">Files: index.html, style.css, script.js, logic.lua, data/*.json</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

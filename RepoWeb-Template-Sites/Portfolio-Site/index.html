@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Site</title>
+  <style>
+    :root { --bg:#0a0a0b; --surface:#131316; --card:#1a1a1f; --border:#2a2a30; --text:#e8e8ed; --muted:#8a8a95; --accent:#10b981; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+    .container { max-width:700px; margin:0 auto; padding:2rem 1.5rem; }
+    h1 { font-size:2rem; font-weight:800; background:linear-gradient(135deg,#10b981,#6ee7b7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:0.3rem; }
+    .tagline { color:var(--muted); margin-bottom:2rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; }
+    .card h3 { font-size:1rem; margin-bottom:0.4rem; }
+    .card p { color:var(--muted); font-size:0.88rem; }
+    .card .tags { display:flex; gap:0.4rem; margin-top:0.6rem; flex-wrap:wrap; }
+    .tag { font-size:0.72rem; padding:0.15rem 0.5rem; border-radius:12px; background:rgba(16,185,129,0.1); color:#6ee7b7; }
+    footer { text-align:center; margin-top:2rem; color:var(--muted); font-size:0.8rem; padding-top:1rem; border-top:1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>John Doe</h1>
+    <p class="tagline">Full-Stack Developer &bull; Open Source Contributor &bull; Decentralized Web Enthusiast</p>
+
+    <div class="card">
+      <h3>About</h3>
+      <p id="about-text">Loading about text...</p>
+    </div>
+
+    <div class="card">
+      <h3>Skills</h3>
+      <p>Loaded from data/skills.json:</p>
+      <div id="skills-container" class="tags"></div>
+    </div>
+
+    <div class="card">
+      <h3>Projects</h3>
+      <p>Loaded from data/projects.json:</p>
+      <div id="projects-container"></div>
+    </div>
+
+    <footer>Hosted on GitHub via RepoWeb &mdash; No server needed</footer>
+  </div>
+  <script>
+    (function(){
+      var d = window.__repoweb_data || {};
+      try {
+        var about = d['data/about.txt'];
+        if (about) document.getElementById('about-text').textContent = about;
+      } catch(e){}
+      try {
+        var skills = JSON.parse(d['data/skills.json'] || '[]');
+        document.getElementById('skills-container').innerHTML = skills.map(function(s){ return '<span class="tag">'+s+'</span>'; }).join('');
+      } catch(e){}
+      try {
+        var projects = JSON.parse(d['data/projects.json'] || '[]');
+        document.getElementById('projects-container').innerHTML = projects.map(function(p){
+          return '<div class="card" style="margin-top:0.5rem"><h3>'+p.name+'</h3><p>'+p.desc+'</p></div>';
+        }).join('');
+      } catch(e){}
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lua Demo</title>
+  <style>
+    :root { --bg:#0a0a0b; --surface:#131316; --card:#1a1a1f; --border:#2a2a30; --text:#e8e8ed; --muted:#8a8a95; --accent:#10b981; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system,BlinkMacSystemFont,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+    .container { max-width:700px; margin:0 auto; padding:2rem 1.5rem; }
+    h1 { font-size:2rem; margin-bottom:0.3rem; }
+    h1#lua-title { color:var(--muted); transition:color 0.3s; }
+    .subtitle { color:var(--muted); margin-bottom:2rem; }
+    .info-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem; margin-bottom:1rem; }
+    .info-card h2 { font-size:1rem; margin-bottom:0.5rem; color:var(--accent); }
+    .info-card code { background:rgba(16,185,129,0.1); color:var(--accent); padding:0.1em 0.3em; border-radius:4px; font-size:0.85em; }
+    .info-card pre { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1rem; margin-top:0.5rem; font-size:0.82rem; overflow-x:auto; color:#a5b4fc; }
+    footer { text-align:center; margin-top:2rem; color:var(--muted); font-size:0.8rem; padding-top:1rem; border-top:1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="lua-title">Lua Demo Site</h1>
+    <p class="subtitle">Demonstrating Fengari Lua VM integration in RepoWeb</p>
+
+    <div class="info-card">
+      <h2>Available Lua APIs</h2>
+      <pre>repoweb:getElementById(id)
+repoweb:querySelector(sel)
+repoweb:createElement(tag)
+repoweb:setTextContent(el, text)
+repoweb:setStyle(el, prop, val)
+repoweb:appendChild(parent, child)
+repoweb:getData(path)
+repoweb:log(...)</pre>
+    </div>
+
+    <div class="info-card">
+      <h2>What Lua Does Here</h2>
+      <p>The <code>logic.lua</code> file in this folder is intercepted by RepoWeb, loaded via the Fengari Lua VM, and executed with a safe DOM proxy. It can create elements, modify styles, and read data files — all from Lua.</p>
+    </div>
+
+    <div id="lua-demo-area">
+      <div class="info-card">
+        <h2>Dynamic Output Area</h2>
+        <p>Elements below are created by logic.lua at runtime:</p>
+      </div>
+    </div>
+
+    <footer>Lua-powered via RepoWeb + Fengari</footer>
+  </div>
+</body>
+</html>

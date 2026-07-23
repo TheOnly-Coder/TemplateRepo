@@ -1,0 +1,1 @@
+I build things for the decentralized web. My passion is making the open web more accessible by eliminating traditional hosting barriers. Every website should be a git repo away.

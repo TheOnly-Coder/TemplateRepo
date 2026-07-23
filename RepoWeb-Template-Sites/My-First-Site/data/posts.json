@@ -1,0 +1,7 @@
+{
+  "posts": [
+    { "title": "Welcome to RepoWeb", "author": "Alice Chen", "date": "2025-07-01" },
+    { "title": "How Decentralized Hosting Works", "author": "Bob Martinez", "date": "2025-07-10" },
+    { "title": "Lua Scripting in the Browser", "author": "Charlie Kim", "date": "2025-07-15" }
+  ]
+}
