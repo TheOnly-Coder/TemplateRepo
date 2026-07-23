@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My First RepoWeb Site</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #a3e635, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 600px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+    }
+    p { line-height: 1.6; margin-bottom: 1rem; }
+    .btn {
+      display: inline-block;
+      background: #a3e635;
+      color: #0a0a0a;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #bef264; transform: translateY(-1px); }
+    #counter { font-size: 3rem; font-weight: 700; color: #a3e635; margin: 1rem 0; }
+    #lua-output {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(0,0,0,0.3);
+      border-radius: 0.5rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      min-height: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>My First RepoWeb Site</h1>
+  <div class="card">
+    <p>Welcome to <strong>RepoWeb</strong>! This site is hosted entirely as a GitHub repository. No traditional web server needed.</p>
+    <p>This demo showcases HTML, CSS, JavaScript, and Lua scripting all working together inside the RepoWeb browser.</p>
+    <div id="counter">0</div>
+    <button class="btn" id="increment-btn">Click Me (JavaScript)</button>
+    <button class="btn" style="background:#22d3ee;color:#0a0a0a;margin-left:0.5rem" id="lua-btn">Run Lua</button>
+    <div id="lua-output">Lua output will appear here...</div>
+  </div>
+
+  <script>
+    // JavaScript counter
+    let count = 0;
+    const counter = document.getElementById('counter');
+    document.getElementById('increment-btn').addEventListener('click', () => {
+      count++;
+      counter.textContent = count;
+    });
+  </script>
+
+  <!-- Lua scripting section -->
+  <script>
+    (function() {
+      document.getElementById('lua-btn').addEventListener('click', function() {
+        if (typeof fengari !== 'undefined') {
+          try {
+            fengari.lua.luaL_dostring(
+              fengari.lauxlib.L,
+              fengari.to_luastring([
+                '-- Lua Fibonacci sequence',
+                'local function fib(n)',
+                '  if n <= 1 then return n end',
+                '  return fib(n-1) + fib(n-2)',
+                'end',
+                '',
+                '-- Write to the DOM',
+                'local output = ""',
+                'for i = 0, 12 do',
+                '  output = output .. fib(i) .. " "',
+                'end',
+                '',
+                '-- Access DOM through __repoweb_dom',
+                'if __repoweb_dom then',
+                '  local el = __repoweb_dom.getElementById("lua-output")',
+                '  if el then',
+                '    el.setHTML("Fibonacci: " .. output)',
+                '    el.setAttr("style", "color: #22d3ee")',
+                '  end',
+                'end',
+              ].join('\n'))
+            );
+          } catch(e) {
+            document.getElementById('lua-output').textContent = 'Lua error: ' + e;
+          }
+        } else {
+          document.getElementById('lua-output').textContent = 'Fengari Lua VM not loaded';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
